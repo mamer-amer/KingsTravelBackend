@@ -4,6 +4,7 @@ import com.example.kingsTravel.MODEL.TravelFairsCategory;
 import com.sun.istack.NotNull;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class TravelFairDto implements Serializable {
 
@@ -16,7 +17,7 @@ public class TravelFairDto implements Serializable {
    Boolean active;
 
    @NotNull
-   TravelFairsCategory travelFairsCategories;
+   List<TravelFairsCategory> travelFairsCategories;
 
     public TravelFairDto() {
     }
@@ -77,11 +78,11 @@ public class TravelFairDto implements Serializable {
         this.active = active;
     }
 
-    public TravelFairsCategory getTravelFairsCategories() {
+    public List<TravelFairsCategory> getTravelFairsCategories() {
         return travelFairsCategories;
     }
 
-    public void setTravelFairsCategories(TravelFairsCategory travelFairsCategories) {
+    public void setTravelFairsCategories(List<TravelFairsCategory> travelFairsCategories) {
         this.travelFairsCategories = travelFairsCategories;
     }
 }

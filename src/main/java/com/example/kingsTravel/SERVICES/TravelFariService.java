@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class TravelFariService {
@@ -27,14 +26,12 @@ public class TravelFariService {
             TravelFairs  travelFairs = new TravelFairs();
             travelFairs.setActive(travelFairDto.getActive());
             travelFairs.setAmount(travelFairDto.getAmount());
+            travelFairs.setDiscount(travelFairDto.getDiscount());
             travelFairs.setArrivalDate(travelFairDto.getArrivalDate());
-            travelFairs.setArrivalTo(travelFairDto.getArrivalTo());
             travelFairs.setDepartureDate(travelFairDto.getDepartureDate());
             travelFairs.setArrivalTo(travelFairDto.getArrivalTo());
-            travelFairs.setDiscount(travelFairDto.getDiscount());
             travelFairs.setDepartureFrom(travelFairDto.getDepartureFrom());
-           travelFairs.setTravelFairsCategories((Set<TravelFairsCategory>) travelFairDto.getTravelFairsCategories());
-
+//            travelFairs.getTravelFairsCategories().add(travelFairDto.getTravelFairsCategories());
             travelFairRepository.save(travelFairs);
             return new ResponseEntity<TravelFairs>(travelFairs,HttpStatus.OK);
         }
