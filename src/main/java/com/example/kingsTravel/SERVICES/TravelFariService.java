@@ -1,8 +1,10 @@
 package com.example.kingsTravel.SERVICES;
 
 import com.example.kingsTravel.DTO.TravelFairDto;
+import com.example.kingsTravel.MODEL.TravelFairAndCategoryAssortments;
 import com.example.kingsTravel.MODEL.TravelFairs;
 import com.example.kingsTravel.MODEL.TravelFairsCategory;
+import com.example.kingsTravel.REPOSITORY.TravelAssortmentsRepository;
 import com.example.kingsTravel.REPOSITORY.TravelFairRepository;
 import com.example.kingsTravel.REPOSITORY.TravelFarisCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -19,7 +23,11 @@ public class TravelFariService {
         TravelFairRepository travelFairRepository;
 
         @Autowired
-         TravelFarisCategoryRepository travelFarisCategoryRepository;
+         TravelFarisCategoryRepository categoryRepository;
+
+        @Autowired
+    TravelAssortmentsRepository travelAssortmentsRepository;
+
 
     public ResponseEntity<TravelFairs> save(TravelFairDto travelFairDto) {
         try {
@@ -31,8 +39,18 @@ public class TravelFariService {
             travelFairs.setDepartureDate(travelFairDto.getDepartureDate());
             travelFairs.setArrivalTo(travelFairDto.getArrivalTo());
             travelFairs.setDepartureFrom(travelFairDto.getDepartureFrom());
-//            travelFairs.getTravelFairsCategories().add(travelFairDto.getTravelFairsCategories());
             travelFairRepository.save(travelFairs);
+
+             travelFairDto.getTravelFairsCategories().iterator().forEachRemaining(travelFairsCategory -> {
+                 TravelFairAndCategoryAssortments travelFairAndCategoryAssortments = new TravelFairAndCategoryAssortments();
+                 travelFairAndCategoryAssortments.setActive(true);
+                 travelFairAndCategoryAssortments.setDate(new Date());
+                 travelFairAndCategoryAssortments.setTravelFairs(travelFairs);
+                 travelFairAndCategoryAssortments.setTravelFairsCategory(travelFairsCategory);
+                 travelAssortmentsRepository.save(travelFairAndCategoryAssortments);
+
+             });
+
             return new ResponseEntity<TravelFairs>(travelFairs,HttpStatus.OK);
         }
         catch (Exception e){

@@ -19,6 +19,7 @@ public class TravelCategoryService {
         if(categoryDto.getCategory()!=null){
             TravelFairsCategory travelFairsCategory = new TravelFairsCategory();
             travelFairsCategory.setCategory(categoryDto.getCategory());
+            travelFairsCategory.setCategoryPrice(categoryDto.getCategory());
             travelFarisCategoryRepository.save(travelFairsCategory);
             return new ResponseEntity<TravelFairs>(HttpStatus.OK);
         }

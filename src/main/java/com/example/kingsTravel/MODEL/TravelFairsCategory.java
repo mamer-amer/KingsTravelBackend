@@ -19,12 +19,21 @@ public class TravelFairsCategory extends BaseEntity {
     @Column(unique = true)
     String category;
 
+    @NotNull
+    @Column
+    String categoryPrice;
 
-    @ManyToMany(mappedBy = "travelFairsCategories")
-    Set<TravelFairs> travelFairsSet = new HashSet<>();
+    public TravelFairsCategory(Long id, String category, String categoryPrice) {
+        this.id = id;
+        this.category = category;
+        this.categoryPrice = categoryPrice;
+    }
 
-
-    public TravelFairsCategory() {
+    public TravelFairsCategory(String createdAt, String updatedAt, String timeZone, Long id, String category, String categoryPrice) {
+        super(createdAt, updatedAt, timeZone);
+        this.id = id;
+        this.category = category;
+        this.categoryPrice = categoryPrice;
     }
 
     public Long getId() {
@@ -35,19 +44,22 @@ public class TravelFairsCategory extends BaseEntity {
         this.id = id;
     }
 
-    public Set<TravelFairs> getTravelFairsSet() {
-        return travelFairsSet;
-    }
-
-    public void setTravelFairsSet(Set<TravelFairs> travelFairsSet) {
-        this.travelFairsSet = travelFairsSet;
-    }
-
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getCategoryPrice() {
+        return categoryPrice;
+    }
+
+    public void setCategoryPrice(String categoryPrice) {
+        this.categoryPrice = categoryPrice;
+    }
+
+    public TravelFairsCategory() {
     }
 }
