@@ -19,21 +19,23 @@ public class TravelFairsCategory extends BaseEntity {
     @Column(unique = true)
     String category;
 
-    @NotNull
-    @Column
-    String categoryPrice;
 
-    public TravelFairsCategory(Long id, String category, String categoryPrice) {
-        this.id = id;
-        this.category = category;
-        this.categoryPrice = categoryPrice;
+    public TravelFairsCategory() {
     }
 
-    public TravelFairsCategory(String createdAt, String updatedAt, String timeZone, Long id, String category, String categoryPrice) {
+    public TravelFairsCategory(String createdAt, String updatedAt, String timeZone) {
+        super(createdAt, updatedAt, timeZone);
+    }
+
+    public TravelFairsCategory(Long id, String category) {
+        this.id = id;
+        this.category = category;
+    }
+
+    public TravelFairsCategory(String createdAt, String updatedAt, String timeZone, Long id, String category) {
         super(createdAt, updatedAt, timeZone);
         this.id = id;
         this.category = category;
-        this.categoryPrice = categoryPrice;
     }
 
     public Long getId() {
@@ -50,16 +52,5 @@ public class TravelFairsCategory extends BaseEntity {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getCategoryPrice() {
-        return categoryPrice;
-    }
-
-    public void setCategoryPrice(String categoryPrice) {
-        this.categoryPrice = categoryPrice;
-    }
-
-    public TravelFairsCategory() {
     }
 }

@@ -17,7 +17,7 @@ public class TravelFairDto implements Serializable {
    Boolean active;
 
    @NotNull
-   List<TravelFairsCategory> travelFairsCategories;
+   List<TravelCategoryPriceDTO> travelFairsCategories;
 
     public TravelFairDto() {
     }
@@ -78,11 +78,11 @@ public class TravelFairDto implements Serializable {
         this.active = active;
     }
 
-    public List<TravelFairsCategory> getTravelFairsCategories() {
+    public List<TravelCategoryPriceDTO> getTravelFairsCategories() {
         return travelFairsCategories;
     }
 
-    public void setTravelFairsCategories(List<TravelFairsCategory> travelFairsCategories) {
+    public void setTravelFairsCategories(List<TravelCategoryPriceDTO> travelFairsCategories) {
         this.travelFairsCategories = travelFairsCategories;
     }
 }

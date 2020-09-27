@@ -46,7 +46,8 @@ public class TravelFariService {
                  travelFairAndCategoryAssortments.setActive(true);
                  travelFairAndCategoryAssortments.setDate(new Date());
                  travelFairAndCategoryAssortments.setTravelFairs(travelFairs);
-                 travelFairAndCategoryAssortments.setTravelFairsCategory(travelFairsCategory);
+                 travelFairAndCategoryAssortments.setTravelFairsCategory(travelFairsCategory.getTravelFairsCategory());
+                 travelFairAndCategoryAssortments.setPrice(travelFairsCategory.getPrice());
                  travelAssortmentsRepository.save(travelFairAndCategoryAssortments);
 
              });

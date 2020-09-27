@@ -15,6 +15,10 @@ public class TravelFairAndCategoryAssortments {
     @ManyToOne
     TravelFairsCategory travelFairsCategory;
 
+
+    @Column
+    Float price;
+
     @Column
     Date date;
 
@@ -22,6 +26,14 @@ public class TravelFairAndCategoryAssortments {
     Boolean isActive;
 
     public TravelFairAndCategoryAssortments() {
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     public Long getId() {
