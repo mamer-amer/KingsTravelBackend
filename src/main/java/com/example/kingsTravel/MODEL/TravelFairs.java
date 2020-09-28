@@ -50,6 +50,7 @@ public class TravelFairs extends BaseEntity {
     }
 
     public TravelFairs() {
+
     }
 
     public TravelFairs(String createdAt, String updatedAt, String timeZone, Long id, String departureFrom, String arrivalTo, String departureDate, String arrivalDate, Long amount, Long discount, Boolean isActive) {

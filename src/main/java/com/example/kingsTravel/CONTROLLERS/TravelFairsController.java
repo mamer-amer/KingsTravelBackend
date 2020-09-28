@@ -31,16 +31,20 @@ public class TravelFairsController {
         return travelFariService.getAllFares();
     }
 
-    @GetMapping("/")
-    public ApiResponse getAllFaresAndCategories(){
-        return travelFariService.getAllFaresAndCategories();
-    }
+//    @GetMapping("/")
+//    public ApiResponse getAllFaresAndCategories(){
+//        return travelFariService.getAllFaresAndCategories();
+//    }
 
     @GetMapping("/get")
     public ApiResponse getAll(){
         return travelFariService.getAll();
     }
 
+    @GetMapping("/get/{id}")
+    public ApiResponse getAll(@PathVariable("id") Long id){
+        return travelFariService.getById(id);
+    }
 
 
 }

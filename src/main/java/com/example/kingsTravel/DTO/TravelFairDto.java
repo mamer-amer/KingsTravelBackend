@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class TravelFairDto implements Serializable {
-
+    Long id;
    String  departureFrom;
    String arrivalTo;
    String departureDate;
@@ -18,6 +18,14 @@ public class TravelFairDto implements Serializable {
 
    @NotNull
    List<TravelCategoryPriceDTO> travelFairsCategories;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public TravelFairDto() {
     }

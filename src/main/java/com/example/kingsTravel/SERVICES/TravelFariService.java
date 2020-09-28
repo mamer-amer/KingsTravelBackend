@@ -3,6 +3,7 @@ package com.example.kingsTravel.SERVICES;
 import com.example.kingsTravel.CONSTANTS.ApiResponse;
 import com.example.kingsTravel.CONSTANTS.Status;
 import com.example.kingsTravel.DTO.HomePageDTO;
+import com.example.kingsTravel.DTO.TravelCategoryPriceDTO;
 import com.example.kingsTravel.DTO.TravelFairDto;
 import com.example.kingsTravel.MODEL.TravelFairAndCategoryAssortments;
 import com.example.kingsTravel.MODEL.TravelFairs;
@@ -16,9 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TravelFariService {
@@ -36,28 +35,46 @@ public class TravelFariService {
     public ResponseEntity<TravelFairs> save(TravelFairDto travelFairDto) {
         try {
             TravelFairs  travelFairs = new TravelFairs();
-            travelFairs.setActive(travelFairDto.getActive());
-            travelFairs.setAmount(travelFairDto.getAmount());
-            travelFairs.setDiscount(travelFairDto.getDiscount());
-            travelFairs.setArrivalDate(travelFairDto.getArrivalDate());
-            travelFairs.setDepartureDate(travelFairDto.getDepartureDate());
-            travelFairs.setArrivalTo(travelFairDto.getArrivalTo());
-            travelFairs.setDepartureFrom(travelFairDto.getDepartureFrom());
-            travelFairRepository.save(travelFairs);
 
-             travelFairDto.getTravelFairsCategories().iterator().forEachRemaining(travelFairsCategory -> {
-                 TravelFairAndCategoryAssortments travelFairAndCategoryAssortments = new TravelFairAndCategoryAssortments();
-                 travelFairAndCategoryAssortments.setActive(true);
-                 travelFairAndCategoryAssortments.setDate(new Date());
-                 travelFairAndCategoryAssortments.setTravelFairs(travelFairs);
-                 Optional<TravelFairsCategory> category= categoryRepository.findById(travelFairsCategory.getId());
-                 travelFairAndCategoryAssortments.setTravelFairsCategory(category.get());
-                 travelFairAndCategoryAssortments.setPrice(travelFairsCategory.getPrice());
-                 travelAssortmentsRepository.save(travelFairAndCategoryAssortments);
 
-             });
+            //update
+            if(travelFairDto.getId()!=null){
+                travelFairs = travelFairRepository.findById(travelFairDto.getId()).get();
+                travelAssortmentsRepository.deleteAllRelations(travelFairDto.getId());
+//               travelFairDto.getTravelFairsCategories().clear();
+//               travelFairDto.setTravelFairsCategories(priceDTOS);
 
-                return new ResponseEntity<TravelFairs>(travelFairs,HttpStatus.OK);
+            }
+
+                travelFairs.setCreatedAt(new Date().toString());
+                travelFairs.setUpdatedAt(new Date().toString());
+                travelFairs.setTimeZone(TimeZone.getDefault().getDisplayName());
+                travelFairs.setActive(travelFairDto.getActive());
+                travelFairs.setAmount(travelFairDto.getAmount());
+                travelFairs.setDiscount(travelFairDto.getDiscount());
+                travelFairs.setArrivalDate(travelFairDto.getArrivalDate());
+                travelFairs.setDepartureDate(travelFairDto.getDepartureDate());
+                travelFairs.setArrivalTo(travelFairDto.getArrivalTo());
+                travelFairs.setDepartureFrom(travelFairDto.getDepartureFrom());
+                travelFairRepository.save(travelFairs);
+
+            TravelFairs finalTravelFairs = travelFairs;
+            travelFairDto.getTravelFairsCategories().iterator().forEachRemaining(travelFairsCategory -> {
+                    TravelFairAndCategoryAssortments travelFairAndCategoryAssortments = new TravelFairAndCategoryAssortments();
+                    travelFairAndCategoryAssortments.setActive(true);
+                    travelFairAndCategoryAssortments.setDate(new Date());
+                    travelFairAndCategoryAssortments.setTravelFairs(finalTravelFairs);
+                    Optional<TravelFairsCategory> category= categoryRepository.findById(travelFairsCategory.getId());
+                    travelFairAndCategoryAssortments.setTravelFairsCategory(category.get());
+                    travelFairAndCategoryAssortments.setPrice(travelFairsCategory.getPrice());
+                    travelAssortmentsRepository.save(travelFairAndCategoryAssortments);
+
+                });
+
+
+
+            return new ResponseEntity<TravelFairs>(travelFairs,HttpStatus.OK);
+
         }
         catch (Exception e){
             return new ResponseEntity<TravelFairs>(HttpStatus.NOT_FOUND);
@@ -70,13 +87,17 @@ public class TravelFariService {
         return new ApiResponse(Status.Status_Ok,"Sucess",travelFairsList);
     }
 
-    public ApiResponse getAllFaresAndCategories(){
-        List<HomePageDTO> homePageDTOList = travelAssortmentsRepository.getAll();
-        return new ApiResponse(Status.Status_Ok,"Succes",homePageDTOList);
-    }
+//    public ApiResponse getAllFaresAndCategories(){
+//        List<HomePageDTO> homePageDTOList = travelAssortmentsRepository.getAll();
+//        return new ApiResponse(Status.Status_Ok,"Succes",homePageDTOList);
+//    }
 
     public ApiResponse getAll(){
         List<TravelFairAndCategoryAssortments> travelFairAndCategoryAssortmentsList= travelAssortmentsRepository.findAll();
+        return new ApiResponse(Status.Status_Ok,"Success",travelFairAndCategoryAssortmentsList);
+    }
+    public ApiResponse getById(Long id){
+        List<TravelFairAndCategoryAssortments> travelFairAndCategoryAssortmentsList= travelAssortmentsRepository.getById(id);
         return new ApiResponse(Status.Status_Ok,"Success",travelFairAndCategoryAssortmentsList);
     }
 

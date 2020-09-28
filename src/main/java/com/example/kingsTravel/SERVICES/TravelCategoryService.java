@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service
 public class TravelCategoryService {
@@ -22,8 +24,12 @@ public class TravelCategoryService {
 
     public ResponseEntity<TravelFairs> save(TravelCategoryDto categoryDto) {
         if(categoryDto.getCategory()!=null){
+
             TravelFairsCategory travelFairsCategory = new TravelFairsCategory();
             travelFairsCategory.setCategory(categoryDto.getCategory());
+            travelFairsCategory.setCreatedAt(new Date().toString());
+            travelFairsCategory.setUpdatedAt(new Date().toString());
+            travelFairsCategory.setTimeZone(TimeZone.getDefault().getDisplayName());
             travelFarisCategoryRepository.save(travelFairsCategory);
             return new ResponseEntity<TravelFairs>(HttpStatus.OK);
         }
