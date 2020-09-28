@@ -52,7 +52,7 @@ public class TravelFariService {
 
              });
 
-            return new ResponseEntity<TravelFairs>(travelFairs,HttpStatus.OK);
+                return new ResponseEntity<TravelFairs>(travelFairs,HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<TravelFairs>(HttpStatus.NOT_FOUND);
