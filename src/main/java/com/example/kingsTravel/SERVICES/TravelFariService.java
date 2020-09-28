@@ -1,5 +1,8 @@
 package com.example.kingsTravel.SERVICES;
 
+import com.example.kingsTravel.CONSTANTS.ApiResponse;
+import com.example.kingsTravel.CONSTANTS.Status;
+import com.example.kingsTravel.DTO.HomePageDTO;
 import com.example.kingsTravel.DTO.TravelFairDto;
 import com.example.kingsTravel.MODEL.TravelFairAndCategoryAssortments;
 import com.example.kingsTravel.MODEL.TravelFairs;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,7 +50,8 @@ public class TravelFariService {
                  travelFairAndCategoryAssortments.setActive(true);
                  travelFairAndCategoryAssortments.setDate(new Date());
                  travelFairAndCategoryAssortments.setTravelFairs(travelFairs);
-                 travelFairAndCategoryAssortments.setTravelFairsCategory(travelFairsCategory.getTravelFairsCategory());
+                 Optional<TravelFairsCategory> category= categoryRepository.findById(travelFairsCategory.getId());
+                 travelFairAndCategoryAssortments.setTravelFairsCategory(category.get());
                  travelFairAndCategoryAssortments.setPrice(travelFairsCategory.getPrice());
                  travelAssortmentsRepository.save(travelFairAndCategoryAssortments);
 
@@ -58,6 +63,21 @@ public class TravelFariService {
             return new ResponseEntity<TravelFairs>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    public ApiResponse getAllFares(){
+        List<TravelFairs> travelFairsList = travelFairRepository.findAll();
+        return new ApiResponse(Status.Status_Ok,"Sucess",travelFairsList);
+    }
+
+    public ApiResponse getAllFaresAndCategories(){
+        List<HomePageDTO> homePageDTOList = travelAssortmentsRepository.getAll();
+        return new ApiResponse(Status.Status_Ok,"Succes",homePageDTOList);
+    }
+
+    public ApiResponse getAll(){
+        List<TravelFairAndCategoryAssortments> travelFairAndCategoryAssortmentsList= travelAssortmentsRepository.findAll();
+        return new ApiResponse(Status.Status_Ok,"Success",travelFairAndCategoryAssortmentsList);
     }
 
 }

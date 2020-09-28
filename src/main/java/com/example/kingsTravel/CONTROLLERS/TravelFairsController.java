@@ -1,6 +1,7 @@
 package com.example.kingsTravel.CONTROLLERS;
 
 
+import com.example.kingsTravel.CONSTANTS.ApiResponse;
 import com.example.kingsTravel.DTO.TravelFairDto;
 import com.example.kingsTravel.MODEL.TravelFairs;
 import com.example.kingsTravel.REPOSITORY.TravelFairRepository;
@@ -23,6 +24,21 @@ public class TravelFairsController {
     @PostMapping("/fair")
     private ResponseEntity<TravelFairs> save(@RequestBody TravelFairDto travelFairDto){
         return travelFariService.save(travelFairDto);
+    }
+
+    @GetMapping("/fair")
+    public ApiResponse getAllFares(){
+        return travelFariService.getAllFares();
+    }
+
+    @GetMapping("/")
+    public ApiResponse getAllFaresAndCategories(){
+        return travelFariService.getAllFaresAndCategories();
+    }
+
+    @GetMapping("/get")
+    public ApiResponse getAll(){
+        return travelFariService.getAll();
     }
 
 
