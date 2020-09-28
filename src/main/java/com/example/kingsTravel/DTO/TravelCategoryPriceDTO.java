@@ -4,23 +4,24 @@ import com.example.kingsTravel.MODEL.TravelFairsCategory;
 
 public class TravelCategoryPriceDTO {
 
-    TravelFairsCategory travelFairsCategory;
+    Long id;
     Float price;
 
-    public TravelCategoryPriceDTO(TravelFairsCategory travelFairsCategory, Float price) {
-        this.travelFairsCategory = travelFairsCategory;
-        this.price = price;
-    }
 
     public TravelCategoryPriceDTO() {
     }
 
-    public TravelFairsCategory getTravelFairsCategory() {
-        return travelFairsCategory;
+    public TravelCategoryPriceDTO(Long id, Float price) {
+        this.id = id;
+        this.price = price;
     }
 
-    public void setTravelFairsCategory(TravelFairsCategory travelFairsCategory) {
-        this.travelFairsCategory = travelFairsCategory;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Float getPrice() {
